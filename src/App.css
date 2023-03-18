@@ -1,25 +1,7 @@
-.chat-input {
-  display: flex;
-}
-
-.chat-input input {
-  flex-grow: 1;
-}
-.chat-input button {
-  margin-left: 2px;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 90vh;
-  width: 100%;
-}
 
 .chats {
   padding: 3px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   display: flex;
   flex-direction: column;
 }
