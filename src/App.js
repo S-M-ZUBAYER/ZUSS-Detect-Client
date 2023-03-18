@@ -1,10 +1,12 @@
 import { useRef, useState } from "react";
-// import reactLogo from "./assets/react.svg";
 import "./App.css";
 import axios from "axios";
 import { FaCopy } from 'react-icons/fa';
 import aiImg from "./img/AI logo.png"
 import animateImg from "./img/animationPic.png"
+
+
+
 
 const YOU = "you";
 const AI = "ai";
@@ -13,11 +15,15 @@ function App() {
   const [qna, setQna] = useState([]);
   const [loading, setLoading] = useState(false);
 
+
+//create a function to make update array for question answer
+
   const updateQNA = (from, value) => {
     setQna((qna) => [...qna, { from, value }]);
   };
 
 
+  //create a function for copy the text
   
   const handleToCopy=(v)=>{
     let copyValue=v.split("：")[1]
@@ -25,15 +31,16 @@ navigator.clipboard.writeText(copyValue)
   }
 
 
-  
+  // This is the main function which send the question in openAIApi and get the ans from there
+
   const handleSend = () => {
     const question = textareaRef.current.value;
     textareaRef.current.value="";
     updateQNA(YOU, question);
-// http://localhost:5000/  https://zuss-detect.vercel.app
+// http://localhost:5000/  https://zuss-detect.vercel.app   
     setLoading(true);
     axios
-      .post("https://zuss-detect.vercel.app/detect", {
+      .post("https://zuss-detect-s-m-zubayer.vercel.app/detect", {
         question,
       })
       .then((response) => {
@@ -45,7 +52,7 @@ navigator.clipboard.writeText(copyValue)
   };
 
 
-
+// This function show the Question Answer in our user interface
 
   const renderContent = (qna) => {
     const value = qna.value;
@@ -63,33 +70,39 @@ navigator.clipboard.writeText(copyValue)
 
   return (
     <main className="mx-0  relative">
+
+{/* Header part the site heading name here */}
+
     <div className="text-center sticky top-0 w-full text-2xl py-3 font-bold text-sky-500 bg-gradient-to-t from-indigo-900 via-neutral-900 to-blue-900">
-      ZUSS Detect
+      ZUSS DETECT
       <p className="text-lg text-yellow-500">
         {/* Please ask me any question I will try to answer like ChatGPT: */}
         Please give me the information text to get proper address
       </p>
     </div>
-      <div class="chats ml-5 mx-0 md:mx-10 mb-10">
+
+{/* Questions & Answer showing section */}
+
+      <div className="chats ml-5 mx-0 md:mx-10 mb-10">
         {qna.map((qna) => {
           if (qna.from === YOU) {
             return (
-              <div class="send chat">
+              <div className="send chat">
                 <img
                   src={animateImg}
                   alt=""
-                  class="avtar"
+                  className="avtar"
                 />
                 <p>{renderContent(qna)}</p>
               </div>
             );
           }
           return (
-            <div class="recieve chat">
+            <div className="recieve chat">
               <img
                 src={aiImg}
                 alt=""
-                class="avtar"
+                className="avtar"
               />
               <p>{renderContent(qna)}</p>
             </div>
@@ -97,18 +110,18 @@ navigator.clipboard.writeText(copyValue)
         })}
 
         {loading && (
-          <div class="recieve chat">
+          <div className="recieve chat">
             <img
               src={aiImg}
               alt=""
-              class="avtar"
+              className="avtar"
             />
             <p>Typing...</p>
           </div>
         )}
       </div>
 
-      <div className="flex mx-1 md:mx-10 mt-10 border-2">
+      <div className="flex mx-1 md:mx-10 mt-10 mb-10 border-2">
         <textarea
         // type="text"
         ref={textareaRef}
@@ -116,7 +129,7 @@ navigator.clipboard.writeText(copyValue)
         placeholder="Type Something"
         ></textarea>
 
-        <button disabled={loading} className="border-2 px-5 py-1 bg-lime-200 " onClick={handleSend}>
+        <button disabled={loading} className="border-2 px-5 py-1 bg-lime-200 font-semibold bg-gradient-to-tr from-yellow-200 to-green-500 " onClick={handleSend}>
           Send
         </button>
       </div>
