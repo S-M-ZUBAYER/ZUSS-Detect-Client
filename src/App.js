@@ -25,7 +25,15 @@ function App() {
 
   //create a function for copy the text
   
-  const handleToCopy=(v)=>{
+  const handleToCopy=(e,v)=>{
+
+    setTimeout(() => {
+      e.target.classList.add("text-red-300")
+      
+    }, 20);
+    
+   
+    e.target.classList.remove("text-red-300")
     let copyValue=v.split("：")[1]
 navigator.clipboard.writeText(copyValue)
   }
@@ -37,8 +45,8 @@ navigator.clipboard.writeText(copyValue)
     const question = textareaRef.current.value;
     textareaRef.current.value="";
     updateQNA(YOU, question);
-// http://localhost:5000/  https://zuss-detect.vercel.app   
-    setLoading(true);
+// http://localhost:5000/  https://zuss-detect.vercel.app    https://zuss-detect-s-m-zubayer.vercel.app/
+    setLoading(true); 
     axios
       .post("https://zuss-detect-s-m-zubayer.vercel.app/detect", {
         question,
@@ -52,6 +60,15 @@ navigator.clipboard.writeText(copyValue)
   };
 
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSend();
+    }
+  };
+
+
+
+
 // This function show the Question Answer in our user interface
 
   const renderContent = (qna) => {
@@ -59,7 +76,7 @@ navigator.clipboard.writeText(copyValue)
 
     if (Array.isArray(value)) {
       return value.map((v) => <p className="message-text">
-        {v} <FaCopy className="text-red-400 ml-2 inline-block hover:cursor-pointer" onClick={()=>handleToCopy(v)} 
+        {v} <FaCopy className="text-red-400 ml-2 inline-block hover:cursor-pointer" onClick={(e)=>handleToCopy(e,v)} 
         
         /></p>);
     }
@@ -93,7 +110,7 @@ navigator.clipboard.writeText(copyValue)
                   alt=""
                   className="avtar"
                 />
-                <p>{renderContent(qna)}</p>
+                <p>{renderContent(qna)} </p>
               </div>
             );
           }
@@ -104,7 +121,7 @@ navigator.clipboard.writeText(copyValue)
                 alt=""
                 className="avtar"
               />
-              <p>{renderContent(qna)}</p>
+              <p>{renderContent(qna)} </p>
             </div>
           );
         })}
@@ -122,14 +139,14 @@ navigator.clipboard.writeText(copyValue)
       </div>
 
       <div className="flex mx-1 md:mx-10 mt-10 mb-10 border-2">
-        <textarea
+        <textarea onKeyPress={handleKeyPress} 
         // type="text"
         ref={textareaRef}
         className="form-control pl-3 w-full"
         placeholder="Type Something"
         ></textarea>
 
-        <button disabled={loading} className="border-2 px-5 py-1 bg-lime-200 font-semibold bg-gradient-to-tr from-yellow-200 to-green-500 " onClick={handleSend}>
+        <button disabled={loading} className="border-2 px-5 py-1 bg-lime-200 font-semibold bg-gradient-to-tr from-yellow-200 to-green-500 " onClick={handleSend}  onKeyDown={()=>handleKeyPress()} >
           Send
         </button>
       </div>
