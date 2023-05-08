@@ -48,7 +48,7 @@ navigator.clipboard.writeText(copyValue)
 // http://localhost:5000/   https://zuss-detect.vercel.app/detect
     setLoading(true);  
     axios
-      .post("https://zuss-detect-s-m-zubayer.vercel.app/detect", {
+      .post("https://zuss-detect.vercel.app/detect", {
         question,
       })
       .then((response) => {
