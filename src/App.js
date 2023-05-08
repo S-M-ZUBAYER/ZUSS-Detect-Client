@@ -45,8 +45,8 @@ navigator.clipboard.writeText(copyValue)
     const question = textareaRef.current.value;
     textareaRef.current.value="";
     updateQNA(YOU, question);
-// http://localhost:5000/  https://zuss-detect.vercel.app    https://zuss-detect-s-m-zubayer.vercel.app/
-    setLoading(true); 
+// http://localhost:5000/   https://zuss-detect.vercel.app/detect
+    setLoading(true);  
     axios
       .post("https://zuss-detect-s-m-zubayer.vercel.app/detect", {
         question,
